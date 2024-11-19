@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resources</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #818cf8;
+            --bg-dark: #111827;
+            --bg-card: #1f2937;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+            --success: #10b981;
+            --success-hover: #34d399;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 2rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--primary-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .file-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .file-container:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .file-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .file-description {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        .download-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .download-button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .download-button.success {
+            background-color: var(--success);
+            transform: scale(1.05);
+        }
+
+        .download-button.success:hover {
+            background-color: var(--success-hover);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Free Resources</h1>
+
+        {% for file in file_details %}
+        <div class="file-container">
+            <div class="file-name">{{ file.file_name }}</div>
+            <div class="file-description">{{ file.file_description }}</div>
+            <a href="{{ url_for('download_file', file_index=loop.index0) }}" class="download-button" onclick="handleDownload(event, this)">Download</a>
+        </div>
+        
+        {% endfor %}
+    </div>
+
+    <script>
+        function handleDownload(event, element) {
+            event.preventDefault();
+            
+            // Simulate download by using setTimeout (replace with actual download logic)
+            setTimeout(() => {
+                element.classList.add('success');
+                element.textContent = 'Download Successful';
+            }, 1000);
+
+            // For actual download, uncomment the line below
+            window.location.href = element.href;
+        }
+    </script>
+</body>
+</html>
